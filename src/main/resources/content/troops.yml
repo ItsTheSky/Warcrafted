@@ -1,0 +1,12 @@
+# Undeads
+acolyte:
+    health: 100
+    type: GROUND
+    speed: 1.0
+ghoul:
+    health: 150
+    type: GROUND
+    speed: 1.2
+    ground-attack: 20
+    attack-speed: 1.0
+    range: 3

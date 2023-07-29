@@ -1,0 +1,12 @@
+wood:
+    symbol: 🪓
+    initial-amount: 100
+    difficulty-percentage: true
+gold:
+    symbol: ⛏
+    initial-amount: 200
+    difficulty-percentage: true
+food:
+    symbol: 🍖
+    initial-amount: 10
+    difficulty-percentage: true

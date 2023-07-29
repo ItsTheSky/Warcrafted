@@ -1,0 +1,7 @@
+undead:
+    initial-resources:
+        wood: 120
+    starting-troops:
+        acolyte: 3
+        ghoul: 1
+    starting-building: necropolis

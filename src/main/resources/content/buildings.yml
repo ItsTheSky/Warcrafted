@@ -1,0 +1,36 @@
+# Undead
+necropolis:
+    health: 1500
+    build-time: 120
+    upgrade-to: hall-of-the-dead
+    cost:
+        gold: 320
+    stats:
+        max-food: 10
+hall-of-the-dead:
+    health: 1750
+    is-upgrade: true
+    build-time: 180
+    attack-damage: 11-12
+    attack-speed: 1.5
+    attack-range: 5
+    upgrade-to: black-citadel
+    cost:
+        gold: 320
+        wood: 210
+    stats:
+        max-food: 10
+black-citadel:
+    health: 2000
+    is-upgrade: true
+    build-time: 240
+    attack-damage: 15-16
+    attack-speed: 1.5
+    attack-range: 5
+    requirements:
+        - altar-of-darkness
+    cost:
+        gold: 325
+        wood: 230
+    stats:
+        max-food: 10

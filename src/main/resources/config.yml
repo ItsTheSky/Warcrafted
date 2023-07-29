@@ -1,0 +1,8 @@
+# Warcrafted configuration file. This file is in YAML format.
+# Have fun!
+
+# The desired language file to be used. This is the file name without the extension.
+# A file called '<language>.yml' must exist in the 'lang' folder, or must be built into the plugin.
+# If the file does not exist, the plugin will default to 'en_US'.
+# -- TIP: You'll be able to switch languages in-game between all available languages!
+language: en_US

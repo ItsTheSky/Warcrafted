@@ -1,0 +1,62 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'io.freefair.lombok' version '5.3.0'
+}
+
+group = 'net.itsthesky'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+    maven { url = "https://repo.papermc.io/repository/maven-public/" }
+    maven { url = "https://oss.sonatype.org/content/groups/public/" }
+    maven { url = "https://repo.codemc.org/repository/maven-public/" }
+}
+
+dependencies {
+    shadow "io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT"
+
+    implementation 'net.kyori:adventure-api:4.14.0'
+    implementation 'net.kyori:adventure-platform-bukkit:4.3.0'
+    implementation 'net.kyori:adventure-text-minimessage:4.14.0'
+    implementation 'com.github.stefvanschie.inventoryframework:IF:0.10.11'
+    implementation 'dev.jorel:commandapi-bukkit-shade:9.0.2'
+
+}
+
+def targetJavaVersion = 17
+java {
+    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+    if (JavaVersion.current() < javaVersion) {
+        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
+        options.release = targetJavaVersion
+    }
+}
+
+processResources {
+    def props = [version: version]
+    inputs.properties props
+    filteringCharset 'UTF-8'
+    filesMatching('plugin.yml') {
+        expand props
+    }
+}
+
+shadowJar {
+    // realocate all packages
+    relocate 'net.kyori.adventure', 'net.itsthesky.adventure'
+    relocate 'org.jetbrains.annotations', 'net.itsthesky.annotations'
+    relocate 'org.jetbrains', 'net.itsthesky.jetbrains'
+    relocate 'com.github.stefvanschie.inventoryframework', 'net.itsthesky.inventoryframework'
+    relocate 'dev.jorel.commandapi', 'net.itsthesky.commandapi'
+}
+
+compileJava.options.encoding = 'UTF-8'
