@@ -1,7 +1,9 @@
 undead:
     initial-resources:
         wood: 120
+        gold: 200
     starting-troops:
         acolyte: 3
         ghoul: 1
     starting-building: necropolis
+    max-food: 100

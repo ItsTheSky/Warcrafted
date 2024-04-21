@@ -3,14 +3,21 @@ package net.itsthesky.warcrafted;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import lombok.Getter;
-import net.itsthesky.warcrafted.internal.commands.AdminCommands;
-import net.itsthesky.warcrafted.internal.commands.PlayerCommands;
-import net.itsthesky.warcrafted.internal.game.meta.entities.Race;
-import net.itsthesky.warcrafted.internal.game.meta.entities.Resource;
-import net.itsthesky.warcrafted.internal.game.meta.entities.Troop;
-import net.itsthesky.warcrafted.internal.game.meta.entities.buildings.Building;
-import net.itsthesky.warcrafted.internal.langs.Language;
-import net.itsthesky.warcrafted.internal.util.ConfigManager;
+import net.itsthesky.warcrafted.commands.AdminCommands;
+import net.itsthesky.warcrafted.commands.PlayerCommands;
+import net.itsthesky.warcrafted.core.game.GameSaveManager;
+import net.itsthesky.warcrafted.core.game.GamesManager;
+import net.itsthesky.warcrafted.core.game.core.Game;
+import net.itsthesky.warcrafted.core.listeners.PlayersActionListener;
+import net.itsthesky.warcrafted.core.game.meta.entities.Race;
+import net.itsthesky.warcrafted.core.game.meta.entities.Resource;
+import net.itsthesky.warcrafted.core.game.meta.entities.troops.Troop;
+import net.itsthesky.warcrafted.core.game.meta.entities.buildings.Building;
+import net.itsthesky.warcrafted.langs.Language;
+import net.itsthesky.warcrafted.util.ChatWaiter;
+import net.itsthesky.warcrafted.util.ConfigManager;
+import net.itsthesky.warcrafted.util.gui.AbstractGUI;
+import net.itsthesky.warcrafted.util.nms.NMSManager;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -26,6 +33,7 @@ public final class Warcrafted extends JavaPlugin {
 
     // ######### Meta
     private BukkitAudiences adventure;
+    private GameSaveManager gameSaveManager;
 
     // ######### Languages
     private static final String[] BUILD_IN_LANGUAGES = {"en_US", "fr_FR"};
@@ -44,6 +52,7 @@ public final class Warcrafted extends JavaPlugin {
     public void onEnable() {
         instance = this;
         adventure = BukkitAudiences.create(this);
+        NMSManager.loadClasses(this);
 
 
 
@@ -108,10 +117,29 @@ public final class Warcrafted extends JavaPlugin {
         CommandAPI.onLoad(new CommandAPIBukkitConfig(this));
         PlayerCommands.loadCommands(this);
         AdminCommands.loadCommands(this);
+
+
+
+        // ######### Listeners
+        getServer().getPluginManager().registerEvents(new PlayersActionListener(), this);
+        getServer().getPluginManager().registerEvents(new AbstractGUI.InventoryListener(), this);
+        getServer().getPluginManager().registerEvents(new ChatWaiter(), this);
+
+
+
+        // ######### Game
+        gameSaveManager = new GameSaveManager(this);
     }
 
     @Override
     public void onDisable() {
+        /* for (Game game : List.copyOf(GamesManager.getGames()))
+            game.endGame(); */
+        gameSaveManager.saveGames();
+
+        for (Game game : List.copyOf(GamesManager.getGames()))
+            game.clear();
+
         instance = null;
     }
 
@@ -138,5 +166,12 @@ public final class Warcrafted extends JavaPlugin {
 
     public List<String> getAvailableLanguagesCode() {
         return availableLanguages.stream().map(Language::getCode).toList();
+    }
+
+    public void reload() {
+        buildingManager.reload();
+        resourceManager.reload();
+        troopManager.reload();
+        raceManager.reload();
     }
 }

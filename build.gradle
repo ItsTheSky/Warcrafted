@@ -1,7 +1,9 @@
 plugins {
     id 'java'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
-    id 'io.freefair.lombok' version '5.3.0'
+    // lombok
+    id 'io.freefair.lombok' version '6.2.0'
+    id 'io.papermc.paperweight.userdev' version '1.5.5'
 }
 
 group = 'net.itsthesky'
@@ -9,20 +11,29 @@ version = '1.0.0'
 
 repositories {
     mavenCentral()
-    maven { url = "https://repo.papermc.io/repository/maven-public/" }
-    maven { url = "https://oss.sonatype.org/content/groups/public/" }
-    maven { url = "https://repo.codemc.org/repository/maven-public/" }
+    maven { url = 'https://repo.papermc.io/repository/maven-public/' }
+    maven { url = 'https://oss.sonatype.org/content/groups/public/' }
+    maven { url = 'https://repo.codemc.org/repository/maven-public/' }
+    maven { url = 'https://repo.codemc.io/repository/maven-snapshots/' }
+    maven { url = 'https://repo.dmulloy2.net/repository/public/' }
+    maven { url = 'https://jitpack.io' }
 }
 
 dependencies {
-    shadow "io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT"
+    paperweightDevelopmentBundle("io.papermc.paper:dev-bundle:1.20-R0.1-SNAPSHOT")
 
     implementation 'net.kyori:adventure-api:4.14.0'
     implementation 'net.kyori:adventure-platform-bukkit:4.3.0'
     implementation 'net.kyori:adventure-text-minimessage:4.14.0'
     implementation 'com.github.stefvanschie.inventoryframework:IF:0.10.11'
-    implementation 'dev.jorel:commandapi-bukkit-shade:9.0.2'
+    implementation 'dev.jorel:commandapi-bukkit-shade:9.0.3'
+    // nbt api
+    implementation 'de.tr7zw:item-nbt-api:2.11.3'
+    // protocol lib
+    compileOnly 'org.projectlombok:lombok:1.18.20'
 
+    // sqlite
+    implementation 'org.xerial:sqlite-jdbc:3.42.0.0'
 }
 
 def targetJavaVersion = 17
@@ -50,9 +61,14 @@ processResources {
     }
 }
 
+tasks {
+    assemble {
+        dependsOn(reobfJar)
+    }
+}
+
 shadowJar {
     // realocate all packages
-    relocate 'net.kyori.adventure', 'net.itsthesky.adventure'
     relocate 'org.jetbrains.annotations', 'net.itsthesky.annotations'
     relocate 'org.jetbrains', 'net.itsthesky.jetbrains'
     relocate 'com.github.stefvanschie.inventoryframework', 'net.itsthesky.inventoryframework'

@@ -1,12 +1,21 @@
 # Undead
 necropolis:
     health: 1500
-    build-time: 120
+    #build-time: 120
+    build-time: 10
     upgrade-to: hall-of-the-dead
+    icon: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzJlMmQwZWQxNGMyMzg2MjY2NmI0MDVhZWZhYmM2NWE1N2EyNzFlODQyZmRhNWY0ZDE5ZTZiYzExOGNlMGM5NCJ9fX0='
     cost:
         gold: 320
     stats:
-        max-food: 10
+        food: 10
+    tasks:
+        1:
+            type: recruit-troop
+            troop: acolyte
+            time: 15
+            cost:
+                gold: 70
 hall-of-the-dead:
     health: 1750
     is-upgrade: true
@@ -14,23 +23,54 @@ hall-of-the-dead:
     attack-damage: 11-12
     attack-speed: 1.5
     attack-range: 5
+    icon: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzJlMmQwZWQxNGMyMzg2MjY2NmI0MDVhZWZhYmM2NWE1N2EyNzFlODQyZmRhNWY0ZDE5ZTZiYzExOGNlMGM5NCJ9fX0='
     upgrade-to: black-citadel
     cost:
         gold: 320
         wood: 210
     stats:
-        max-food: 10
+        food: 10
+    tasks:
+        1:
+            type: recruit-troop
+            troop: acolyte
+            time: 30
+            cost:
+                gold: 70
 black-citadel:
     health: 2000
-    is-upgrade: true
+    upgrade: true
     build-time: 240
     attack-damage: 15-16
     attack-speed: 1.5
     attack-range: 5
+    icon: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzJlMmQwZWQxNGMyMzg2MjY2NmI0MDVhZWZhYmM2NWE1N2EyNzFlODQyZmRhNWY0ZDE5ZTZiYzExOGNlMGM5NCJ9fX0='
     requirements:
         - altar-of-darkness
     cost:
         gold: 325
         wood: 230
     stats:
-        max-food: 10
+        food: 10
+    tasks:
+        1:
+            type: recruit-troop
+            troop: acolyte
+            time: 30
+            cost:
+                gold: 70
+
+crypt:
+    health: 1300
+    build-time: 100
+    icon: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGY4MzczYTAyOGY4ZDMzYmU4YTZhZjU4ZWUwOTU1YWI5ZmYxYTVhOTJlNTU3ZTE4ZjY5NzkwYTY5NzAxNzdhYSJ9fX0='
+    cost:
+        gold: 200
+        wood: 50
+    tasks:
+        1:
+            type: recruit-troop
+            troop: ghoul
+            time: 18
+            cost:
+                gold: 120

@@ -1,8 +1,10 @@
 name: Warcrafted
 version: '${version}'
 main: net.itsthesky.warcrafted.Warcrafted
-api-version: 1.13
+api-version: '1.20'
 prefix: Warcrafted
 authors: [ItsTheSky]
+softdepend:
+    - ProtocolLib
 description: Warcraft III recreation inside of Minecraft.
 website: https://itsthesky.net/warcrafted
